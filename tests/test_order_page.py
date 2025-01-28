@@ -3,6 +3,7 @@ import allure
 from helps.data import Users
 from pages.home_page import HomePage, HomePageHeader
 from pages.order_page import OrderPage
+from conftest import driver
 
 
 class TestOrderPage:

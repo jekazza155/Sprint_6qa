@@ -1,12 +1,12 @@
-import time
 import allure
 import pytest
-
 from helps.data import Questions, Urls
 from locators.home_page_locators import HomePageLocators
 from pages.home_page import HomePage, HomePageHeader
 from pages.dzen_page import DzenPage
-
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.wait import WebDriverWait
+from conftest import driver
 
 class TestMainPage:
 
@@ -31,7 +31,7 @@ class TestMainPage:
         dzen_page = DzenPage(driver)
         header_page.yandex_logo_click()
         header_page.go_to_new_tab()
-        time.sleep(5)
+        WebDriverWait(driver, 5).until(ec.url_to_be(Urls.DZEN_URL))
         current_url = header_page.get_current_url()
         assert current_url == Urls.DZEN_URL and dzen_page.check_element_main_button()
 
