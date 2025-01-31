@@ -6,7 +6,7 @@ from pages.home_page import HomePage, HomePageHeader
 from pages.dzen_page import DzenPage
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
-from conftest import driver
+
 
 class TestMainPage:
 
@@ -18,9 +18,7 @@ class TestMainPage:
         header_page = HomePageHeader(driver)
         header_page.order_button_click()
         header_page.scooter_logo_click()
-        current_url = header_page.get_current_url()
-        title_is_displayed = header_page.check_order_title()
-        assert current_url == Urls.QA_SCOOTER_URL and title_is_displayed
+        assert header_page.get_current_url() == Urls.QA_SCOOTER_URL and header_page.check_order_title()
 
     @allure.title('Тест проверки перехода на главную страницу DZEN по клику на логотип "Яндекс"')
     @allure.description('''1)Кликаем на логотип "Яндекс"
@@ -31,9 +29,8 @@ class TestMainPage:
         dzen_page = DzenPage(driver)
         header_page.yandex_logo_click()
         header_page.go_to_new_tab()
-        WebDriverWait(driver, 5).until(ec.url_to_be(Urls.DZEN_URL))
-        current_url = header_page.get_current_url()
-        assert current_url == Urls.DZEN_URL and dzen_page.check_element_main_button()
+        header_page.wait_for_url(Urls.DZEN_URL)
+        assert header_page.get_current_url() == Urls.DZEN_URL and dzen_page.check_element_main_button()
 
     @allure.title('Тест проверки текста ответов на вопросы на главной странице веб-приложения')
     @allure.description('''1)Скроллим до блока с вопросами;
